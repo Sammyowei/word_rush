@@ -1,12 +1,26 @@
 import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:word_rush/src/ads/ad_helper.dart';
 import 'package:word_rush/src/ads/ads_manager.dart';
+import 'package:word_rush/src/routes/routes.dart';
 
 final _log = Logger('main.dart');
 Future<void> main() async {
+  Logger.root.onRecord.listen((record) {
+    dev.log(
+      record.message,
+      time: record.time,
+      level: record.level.value,
+      name: record.loggerName,
+      zone: record.zone,
+      error: record.error,
+      stackTrace: record.stackTrace,
+    );
+  });
   WidgetsFlutterBinding.ensureInitialized();
 
   print(defaultTargetPlatform);
@@ -21,6 +35,11 @@ Future<void> main() async {
       print('Unity ads failed initialized.');
     },
   );
+
+  _log.info('Going full screen');
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+  );
   runApp(const MyApp());
 }
 
@@ -29,13 +48,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final _router = GameRoutes.routes;
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+      routeInformationProvider: _router.routeInformationProvider,
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
