@@ -12,13 +12,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late Timer _timer;
   @override
   void initState() {
     super.initState();
-    _timer = Timer(const Duration(seconds: 3), () {
-      context.goNamed(RouteNames.home);
-    });
+    Future.delayed(
+      const Duration(seconds: 3),
+      () => context.goNamed(RouteNames.home),
+    );
   }
 
   @override
