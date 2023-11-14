@@ -1,12 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
-import 'package:word_rush/src/ads/ad_helper.dart';
-import 'package:word_rush/src/ads/ads_manager.dart';
-import 'package:word_rush/src/routes/routes.dart';
+import 'src/src.dart';
 
 final _log = Logger('main.dart');
 Future<void> main() async {
@@ -23,44 +24,116 @@ Future<void> main() async {
   });
   WidgetsFlutterBinding.ensureInitialized();
 
-  print(defaultTargetPlatform);
-  await UnityAds.init(
-    gameId: AdHelper.gameID,
-    onComplete: () {
-      // _log.info('Unity ads has been initialised sucessfully');
-      print('Unity ads has been initialized.');
-    },
-    onFailed: (error, errorMessage) {
-      // _log.warning('Unity ads initialization failed');
-      print('Unity ads failed initialized.');
-    },
-  );
-
   _log.info('Going full screen');
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
   );
-  runApp(const MyApp());
+
+  AdManager? _admanager;
+
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    _admanager = AdManager();
+    await _admanager.initialize();
+  }
+
+  GamesServicesController? gamesServicesController;
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    gamesServicesController = GamesServicesController()
+      // Attempt to log the player in.
+      ..initialize();
+  }
+
+  runApp(
+    MyApp(
+      settingsPersistence: LocalStorageSettingsPersistence(),
+      playerProgressPersistence: LocalStoragePlayerProgressPersistence(),
+      admanager: _admanager,
+      gamesServicesController: gamesServicesController,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final PlayerProgressPersistence playerProgressPersistence;
+
+  final SettingsPersistence settingsPersistence;
+
+  final GamesServicesController? gamesServicesController;
+  final AdManager? admanager;
+  const MyApp(
+      {super.key,
+      required this.playerProgressPersistence,
+      required this.settingsPersistence,
+      this.gamesServicesController,
+      this.admanager});
 
   @override
   Widget build(BuildContext context) {
     final _router = GameRoutes.routes;
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
 
-      routeInformationProvider: _router.routeInformationProvider,
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return AppLifecycleObserver(
+        child: MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) {
+            var progress = PlayerProgress(playerProgressPersistence);
+            progress.getLatestFromStore();
+            return progress;
+          },
+        ),
+        Provider<GamesServicesController?>.value(
+            value: gamesServicesController),
+        Provider<AdManager?>.value(value: admanager),
+        Provider<SettingsController>(
+          lazy: false,
+          create: (context) => SettingsController(
+            persistence: settingsPersistence,
+          )..loadStateFromPersistence(),
+        ),
+        ProxyProvider2<SettingsController, ValueNotifier<AppLifecycleState>,
+            AudioController>(
+          // Ensures that the AudioController is created on startup,
+          // and not "only when it's needed", as is default behavior.
+          // This way, music starts immediately.
+          lazy: false,
+          create: (context) => AudioController()..initialize(),
+          update: (context, settings, lifecycleNotifier, audio) {
+            if (audio == null) throw ArgumentError.notNull();
+            audio.attachSettings(settings);
+            audio.attachLifecycleNotifier(lifecycleNotifier);
+            Future.delayed(
+              const Duration(seconds: 5),
+            );
+            return audio;
+          },
+          dispose: (context, audio) => audio.dispose(),
+        ),
+        Provider(
+          create: (context) => Palette(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        final palette = context.watch<Palette>();
+        return MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: ThemeData.from(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: palette.darkPen,
+              background: palette.backgroundMain,
+            ),
+            textTheme: TextTheme(
+              bodyMedium: TextStyle(
+                color: palette.ink,
+              ),
+            ),
+            useMaterial3: true,
+          ),
+          routeInformationParser: _router.routeInformationParser,
+          routerDelegate: _router.routerDelegate,
+          scaffoldMessengerKey: scaffoldMessengerKey,
+        );
+      }),
+    ));
   }
 }
 

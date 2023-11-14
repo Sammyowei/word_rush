@@ -1,12 +1,40 @@
-class Song {
-  final String filename;
+List<String> soundTypeToFilename(SfxType type) {
+  switch (type) {
+    case SfxType.failed:
+      return [
+        'failed.mp3',
+      ];
+    case SfxType.swiped:
+      return [
+        'game-swipe.mp3',
+      ];
+    case SfxType.select:
+      return [
+        'select.mp3',
+      ];
+    case SfxType.success:
+      return [
+        'success.mp3',
+      ];
+  }
+}
 
-  final String name;
+double soundTypeToVolume(SfxType type) {
+  switch (type) {
+    case SfxType.failed:
+      return 1.0;
+    case SfxType.swiped:
+      return 1.0;
+    case SfxType.select:
+      return 1.0;
+    case SfxType.success:
+      return 1.0;
+  }
+}
 
-  final String? artist;
-
-  const Song(this.filename, this.name, {this.artist});
-
-  @override
-  String toString() => 'Song<$filename>';
+enum SfxType {
+  failed,
+  swiped,
+  select,
+  success,
 }

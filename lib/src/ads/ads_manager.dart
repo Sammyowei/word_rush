@@ -1,7 +1,26 @@
+import 'package:logging/logging.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:word_rush/src/ads/ad_helper.dart';
 
+final _log = Logger('ads_manager.dart');
+
 class AdManager {
+  // TODO: Initialize Unity ads
+
+  Future<void> initialize() async {
+    await UnityAds.init(
+      gameId: AdHelper.gameID,
+      onComplete: () {
+        _log.info('Unity ads has been initialised sucessfully');
+        print('Unity ads has been initialized.');
+      },
+      onFailed: (error, errorMessage) {
+        _log.warning('Unity ads initialization failed');
+        print('Unity ads failed initialized.');
+      },
+    );
+  }
+
   // TODO: preload Interstitial ads
   static Future<void> preloadInterstitialAd() async {
     await UnityAds.load(
