@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "420193807916",
+    "project_id": "word-rush-game",
+    "storage_bucket": "word-rush-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420193807916:android:e8029b996a371950246b89",
+        "android_client_info": {
+          "package_name": "com.bumblestudio.word_rush"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnyeStOh9Yu5TzjUhPwYYaxqJwq21y8nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
-import 'package:unity_ads_plugin/unity_ads_plugin.dart';
+import 'package:word_rush/firebase_options.dart';
+
 import 'src/src.dart';
 
 final _log = Logger('main.dart');
@@ -23,6 +26,30 @@ Future<void> main() async {
     );
   });
   WidgetsFlutterBinding.ensureInitialized();
+
+  // TODO: To enable Firebase Crashlytics, uncomment the following line.
+  // See the 'Crashlytics' section of the main README.md file for details.
+
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      FlutterError.onError = (errorDetails) {
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+      };
+
+      // Pass all uncaught asynchronous errors
+      // that aren't handled by the Flutter framework to Crashlytics.
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
+    } catch (e) {
+      debugPrint("Firebase couldn't be initialized: $e");
+    }
+  }
 
   _log.info('Going full screen');
   SystemChrome.setEnabledSystemUIMode(
@@ -69,8 +96,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _router = GameRoutes.routes;
-
     return AppLifecycleObserver(
         child: MultiProvider(
       providers: [
@@ -101,9 +126,9 @@ class MyApp extends StatelessWidget {
             if (audio == null) throw ArgumentError.notNull();
             audio.attachSettings(settings);
             audio.attachLifecycleNotifier(lifecycleNotifier);
-            Future.delayed(
-              const Duration(seconds: 5),
-            );
+            // Future.delayed(
+            //   const Duration(seconds: 20),
+            // );
             return audio;
           },
           dispose: (context, audio) => audio.dispose(),
@@ -114,8 +139,14 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(builder: (context) {
         final palette = context.watch<Palette>();
+        final routes = GameRoutes.routes;
         return MaterialApp.router(
           title: 'Flutter Demo',
+          routerConfig: RouterConfig(
+            routerDelegate: routes.routerDelegate,
+            routeInformationParser: routes.routeInformationParser,
+            routeInformationProvider: routes.routeInformationProvider,
+          ),
           theme: ThemeData.from(
             colorScheme: ColorScheme.fromSeed(
               seedColor: palette.darkPen,
@@ -128,8 +159,8 @@ class MyApp extends StatelessWidget {
             ),
             useMaterial3: true,
           ),
-          routeInformationParser: _router.routeInformationParser,
-          routerDelegate: _router.routerDelegate,
+          // routeInformationParser: routes.routeInformationParser,
+          // routerDelegate: routes.routerDelegate,
           scaffoldMessengerKey: scaffoldMessengerKey,
         );
       }),
@@ -187,3 +218,23 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 }
+
+// final routes = GoRouter(
+//   initialLocation: RoutePath.home,
+//   routes: [
+//     // GoRoute(
+//     //   path: RoutePath.splash,
+//     //   name: RouteNames.splash,
+//     //   builder: (context, state) {
+//     //     return SplashScreen();
+//     //   },
+//     // ),
+//     GoRoute(
+//       path: RoutePath.home,
+//       name: RouteNames.home,
+//       builder: (context, state) {
+//         return MyHomePage(title: 'Hello World');
+//       },
+//     ),
+//   ],
+// );
