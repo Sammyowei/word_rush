@@ -55,7 +55,12 @@ Future<void> main() async {
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
   );
-
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
   AdManager? _admanager;
 
   if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
@@ -141,6 +146,7 @@ class MyApp extends StatelessWidget {
         final palette = context.watch<Palette>();
         final routes = GameRoutes.routes;
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           routerConfig: RouterConfig(
             routerDelegate: routes.routerDelegate,
@@ -150,7 +156,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData.from(
             colorScheme: ColorScheme.fromSeed(
               seedColor: palette.darkPen,
-              background: palette.backgroundMain,
+              // background: palette.backgroundMain,
             ),
             textTheme: TextTheme(
               bodyMedium: TextStyle(
@@ -189,52 +195,47 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  final images = GameConstant.images;
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<SettingsController>();
+
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //   title: Text(widget.title),
+      // ),
+      body: Container(
+        height: MediaQuery.sizeOf(context).height,
+        width: MediaQuery.sizeOf(context).width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.fill,
+            image: AssetImage(
+              images.backgroundImage,
+            ),
+          ),
         ),
-        body: Center(),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            FloatingActionButton(
-              onPressed: () async {
-                await AdManager.showInterstitialAd();
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
-            FloatingActionButton(
-              onPressed: () async {
-                await AdManager.showRewardedAds();
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.remove),
-            ),
-          ],
-        ));
+      ),
+      // floatingActionButton: Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //   children: [
+      //     FloatingActionButton(
+      //       onPressed: () async {
+      //         controller.toggleMuted();
+      //       },
+      //       tooltip: 'Increment',
+      //       child: const Icon(Icons.add),
+      //     ),
+      //     FloatingActionButton(
+      //       onPressed: () async {
+      //         await AdManager.showRewardedAds();
+      //       },
+      //       tooltip: 'Increment',
+      //       child: const Icon(Icons.remove),
+      //     ),
+      //   ],
+      // ),
+    );
   }
 }
-
-// final routes = GoRouter(
-//   initialLocation: RoutePath.home,
-//   routes: [
-//     // GoRoute(
-//     //   path: RoutePath.splash,
-//     //   name: RouteNames.splash,
-//     //   builder: (context, state) {
-//     //     return SplashScreen();
-//     //   },
-//     // ),
-//     GoRoute(
-//       path: RoutePath.home,
-//       name: RouteNames.home,
-//       builder: (context, state) {
-//         return MyHomePage(title: 'Hello World');
-//       },
-//     ),
-//   ],
-// );
