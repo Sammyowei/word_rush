@@ -1,2 +1,2 @@
 export 'splash.dart';
-export 'main_menu.dart';
+export 'home_page.dart';

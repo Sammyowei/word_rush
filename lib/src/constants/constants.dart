@@ -10,4 +10,5 @@ class GameConstant {
 
 class ImageConstants {
   String get backgroundImage => 'menu/bg'.png;
+  String get playBtn => 'btn/play'.png;
 }
