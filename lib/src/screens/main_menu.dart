@@ -53,7 +53,24 @@ class _MainMenuState extends State<MainMenu> {
                 ),
 
                 // Game Body
-                Container(),
+                Container(
+                  height: 500,
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 30,
+                    bottom: 30,
+                  ),
+                  width: MediaQuery.sizeOf(context).width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        image.settingBoard,
+                      ),
+                    ),
+                  ),
+                ),
 
                 // TODO: Build Footer
                 Container(
