@@ -54,12 +54,12 @@ class _MainMenuState extends State<MainMenu> {
 
                 // Game Body
                 Container(
-                  height: 500,
+                  height: 550,
                   padding: const EdgeInsets.only(
                     left: 20,
                     right: 20,
                     top: 30,
-                    bottom: 30,
+                    bottom: 60,
                   ),
                   width: MediaQuery.sizeOf(context).width,
                   decoration: BoxDecoration(
@@ -70,27 +70,34 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                     ),
                   ),
-                ),
-
-                // TODO: Build Footer
-                Container(
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InkWell(
-                        child: Image.asset(
-                          image.prizeBtn,
+                      Container(),
+                      Container(
+                        height: 60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              child: Image.asset(
+                                image.prizeBtn,
+                              ),
+                            ),
+                            InkWell(
+                              child: Image.asset(
+                                image.leaderBtn,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      InkWell(
-                        child: Image.asset(
-                          image.leaderBtn,
-                        ),
-                      ),
+                      )
                     ],
                   ),
-                )
+                ),
+                Container(),
+                Container(),
+                // TODO: Build Footer
               ],
             ),
           ),
