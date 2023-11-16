@@ -52,7 +52,7 @@ class _MainMenuState extends State<MainMenu> {
                   title: 'Main Menu',
                 ),
 
-                // Game Body
+                // TODO: Game Body
                 Container(
                   height: 550,
                   padding: const EdgeInsets.only(
@@ -80,6 +80,16 @@ class _MainMenuState extends State<MainMenu> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             InkWell(
+                              onTap: () {
+                                audioController.playSfx(SfxType.btnClicked);
+                                context
+                                    .pushNamed(RouteNames.achievements, extra: {
+                                  'header': 'Achievements',
+                                  'desc':
+                                      'There is no current achievement at the moment, please check back later.'
+                                });
+                                print('cliicked');
+                              },
                               child: Image.asset(
                                 image.prizeBtn,
                               ),
@@ -95,6 +105,8 @@ class _MainMenuState extends State<MainMenu> {
                     ],
                   ),
                 ),
+
+                // CustomAlertDialog(),
                 Container(),
                 Container(),
                 // TODO: Build Footer

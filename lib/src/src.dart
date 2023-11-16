@@ -27,3 +27,4 @@ export 'style/palette.dart';
 export 'style/responsive_screen.dart';
 export 'style/snack_bar.dart';
 export 'constants/constants.dart';
+export 'dialogs/custom_alert_dialog.dart';

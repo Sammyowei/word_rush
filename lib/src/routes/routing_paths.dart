@@ -9,4 +9,6 @@ class RoutePath {
   static String play = 'play';
   static String level = 'level';
   static String settings = 'settings';
+  static String leaderBoard = 'leader-board';
+  static String achievements = 'achievements';
 }

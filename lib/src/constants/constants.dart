@@ -55,10 +55,17 @@ class ImageConstants {
   // TODO: Settings Images
 
   String get settingBoard => 'settings/bg'.png;
+
   String get settingHeader => 'settings/92'.png;
 
   // TODO: Menu Images
   // TODO: store assets
 
   String get coinsIcon => 'shop/coin'.png;
+
+  // TODO: MAtch3 assets
+  String get boardHeader => 'match3/down'.png;
+
+  //  TODO: bubbla assets
+  String get btn => 'bubble/load'.png;
 }
