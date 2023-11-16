@@ -69,7 +69,10 @@ class HomePage extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           audioController.playSfx(SfxType.btnClicked);
-                          // context.pushReplacementNamed();
+                          Future.delayed(
+                            const Duration(seconds: 1),
+                            () => context.pushNamed(RouteNames.mainMenu),
+                          );
                         },
                         child: Container(
                           height: 60,
@@ -88,7 +91,7 @@ class HomePage extends StatelessWidget {
                               ),
                               gap,
                               Text(
-                                'Play',
+                                'Start',
                                 style: TextStyle(
                                   fontFamily: 'Guava Candy',
                                   fontSize: 40,
