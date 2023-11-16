@@ -4,6 +4,7 @@ import 'package:word_rush/src/player_progress/presistence/player_progress_persis
 /// Useful for testing.
 class MemoryOnlyPlayerProgressPersistence implements PlayerProgressPersistence {
   int level = 0;
+  int coins = 0;
 
   @override
   Future<int> getHighestLevelReached() async {
@@ -15,5 +16,20 @@ class MemoryOnlyPlayerProgressPersistence implements PlayerProgressPersistence {
   Future<void> saveHighestLevelReached(int level) async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
     this.level = level;
+  }
+
+  @override
+  Future<int> getCoinValue() async {
+    // TODO: implement getHighScore
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    return coins;
+  }
+
+  @override
+  Future<void> saveCoins(int coinAmount) async {
+    final coins = await getCoinValue();
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    final newRecord = coins + coinAmount;
+    this.coins = newRecord;
   }
 }

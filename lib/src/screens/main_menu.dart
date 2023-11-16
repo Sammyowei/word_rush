@@ -38,17 +38,23 @@ class _MainMenuState extends State<MainMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                //  TODO:  Custom AppBar For Main Menu
                 CustomAppBar(
                   color: palette,
-                  leftBtnPath: image.aboutBtn,
+                  showRightBtn: false,
+                  leftBtnPath: image.settingsBtn,
                   rightBtnPath: image.settingsBtn,
-                  rightBtnOnTap: () {
+                  leftBtnOnTap: () {
                     audioController.playSfx(SfxType.btnClicked);
                     context.goNamed(RouteNames.settings);
                   },
                   title: 'Main Menu',
                 ),
+
+                // Game Body
                 Container(),
+
+                // TODO: Build Footer
                 Container(
                   height: 60,
                   child: Row(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 import '../src.dart';
 
@@ -29,25 +31,23 @@ class CustomAppBar extends StatelessWidget {
   final VoidCallback? rightBtnOnTap;
   final bool forCoin;
 
-  static final _image = GameConstant.images;
   @override
   Widget build(BuildContext context) {
+    final progress = context.watch<PlayerProgress>();
     return Container(
       height: 60,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           // color: color.darkPen,
           ),
       width: MediaQuery.sizeOf(context).width,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        forCoin
-            ? Container()
-            : InkWell(
-                onTap: leftBtnOnTap,
-                child: Image.asset(
-                  leftBtnPath,
-                  height: 40,
-                ),
-              ),
+        InkWell(
+          onTap: leftBtnOnTap,
+          child: Image.asset(
+            leftBtnPath,
+            height: 40,
+          ),
+        ),
         showTitle
             ? Text(
                 title,
@@ -74,7 +74,37 @@ class CustomAppBar extends StatelessWidget {
                   height: 40,
                 ),
               )
-            : Container(),
+            : Container(
+                width: MediaQuery.sizeOf(context).width * 0.28,
+                height: 30,
+                decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    color: color.btnColor),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(),
+                    Gap(10),
+                    Text(
+                      '${progress.highestLevelReached}',
+                      style: TextStyle(
+                        fontFamily: 'Guava Candy',
+                        fontSize: 18,
+                        color: color.trueWhite,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            color: color.btnColor,
+                            offset: const Offset(0, 3),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
       ]),
     );
   }
