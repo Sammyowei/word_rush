@@ -42,6 +42,7 @@ class _MainMenuState extends State<MainMenu> {
                 CustomAppBar(
                   color: palette,
                   showRightBtn: false,
+                  showTitle: false,
                   leftBtnPath: image.settingsBtn,
                   rightBtnPath: image.settingsBtn,
                   leftBtnOnTap: () {

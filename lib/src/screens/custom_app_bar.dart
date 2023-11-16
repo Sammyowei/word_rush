@@ -34,6 +34,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = context.watch<PlayerProgress>();
+    final _image = GameConstant.images;
     return Container(
       height: 60,
       decoration: const BoxDecoration(
@@ -75,19 +76,22 @@ class CustomAppBar extends StatelessWidget {
                 ),
               )
             : Container(
-                width: MediaQuery.sizeOf(context).width * 0.28,
                 height: 30,
+                padding: EdgeInsets.only(left: 5, right: 5),
                 decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     color: color.btnColor),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(),
-                    Gap(10),
+                    Image.asset(
+                      _image.coinsIcon,
+                      height: 25,
+                    ),
+                    Gap(5),
                     Text(
-                      '${progress.highestLevelReached}',
+                      '${progress.coinsAmount}',
                       style: TextStyle(
                         fontFamily: 'Guava Candy',
                         fontSize: 18,

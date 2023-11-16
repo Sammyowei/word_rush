@@ -58,4 +58,7 @@ class ImageConstants {
   String get settingHeader => 'settings/92'.png;
 
   // TODO: Menu Images
+  // TODO: store assets
+
+  String get coinsIcon => 'shop/coin'.png;
 }
