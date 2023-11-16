@@ -50,9 +50,22 @@ class _MainMenuState extends State<MainMenu> {
                 ),
                 Container(),
                 Container(
-                  height: 100,
-                  color: palette.backgroundMain,
-                  child: Row(),
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        child: Image.asset(
+                          image.prizeBtn,
+                        ),
+                      ),
+                      InkWell(
+                        child: Image.asset(
+                          image.leaderBtn,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),

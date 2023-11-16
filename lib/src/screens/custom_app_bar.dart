@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget {
     required this.rightBtnPath,
     this.leftBtnOnTap,
     this.rightBtnOnTap,
+    this.forCoin = false,
   });
 
   final Palette color;
@@ -26,6 +27,7 @@ class CustomAppBar extends StatelessWidget {
   final String rightBtnPath;
   final VoidCallback? leftBtnOnTap;
   final VoidCallback? rightBtnOnTap;
+  final bool forCoin;
 
   static final _image = GameConstant.images;
   @override
@@ -37,13 +39,15 @@ class CustomAppBar extends StatelessWidget {
           ),
       width: MediaQuery.sizeOf(context).width,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        InkWell(
-          onTap: leftBtnOnTap,
-          child: Image.asset(
-            leftBtnPath,
-            height: 40,
-          ),
-        ),
+        forCoin
+            ? Container()
+            : InkWell(
+                onTap: leftBtnOnTap,
+                child: Image.asset(
+                  leftBtnPath,
+                  height: 40,
+                ),
+              ),
         showTitle
             ? Text(
                 title,
