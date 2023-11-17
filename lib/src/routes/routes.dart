@@ -15,56 +15,96 @@ class GameRoutes {
         },
         routes: [
           GoRoute(
-              path: RoutePath.mainMenu,
-              name: RouteNames.mainMenu,
-              pageBuilder: (context, state) {
-                return buildMyTransition(
-                    child: const MainMenu(),
-                    color: context.watch<Palette>().btnColor);
-              },
-              routes: [
-                GoRoute(
-                  path: RoutePath.achievements,
-                  name: RouteNames.achievements,
-                  pageBuilder: (context, state) {
-                    var param;
-                    final extra = state.extra;
+            path: RoutePath.mainMenu,
+            name: RouteNames.mainMenu,
+            pageBuilder: (context, state) {
+              return buildMyTransition(
+                  child: const MainMenu(),
+                  color: context.watch<Palette>().btnColor);
+            },
+            routes: [
+              GoRoute(
+                path: RoutePath.achievements,
+                name: RouteNames.achievements,
+                pageBuilder: (context, state) {
+                  var param;
+                  final extra = state.extra;
 
-                    if (extra is Map<String, String>) {
-                      param = extra;
-                      print('extra');
-                    } else {
-                      param = state.uri.queryParameters;
-                      print(param);
-                    }
+                  if (extra is Map<String, String>) {
+                    param = extra;
+                  } else {
+                    param = state.uri.queryParameters;
+                  }
 
-                    final header = param['header'];
-                    final desc = param['desc'];
-                    return DialogPage(
-                      barrierDismissible: true,
-                      builder: (context) {
-                        return Dialog(
-                          elevation: 0,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: CustomAlertDialog(
-                            header: header,
-                            desc: desc,
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                GoRoute(
-                  path: RoutePath.settings,
-                  name: RouteNames.settings,
-                  pageBuilder: (context, state) {
-                    return buildMyTransition(
-                        child: SettingsPage(),
-                        color: context.watch<Palette>().btnColor);
-                  },
-                )
-              ]),
+                  final header = param['header'];
+                  final desc = param['desc'];
+                  return DialogPage(
+                    barrierDismissible: true,
+                    builder: (context) {
+                      return Dialog(
+                        elevation: 0,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: CustomAlertDialog(
+                          header: header,
+                          desc: desc,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              GoRoute(
+                path: RoutePath.leaderBoard,
+                name: RouteNames.leaderBoard,
+                pageBuilder: (context, state) {
+                  var param;
+                  final extra = state.extra;
+
+                  if (extra is Map<String, String>) {
+                    param = extra;
+                    print('extra');
+                  } else {
+                    param = state.uri.queryParameters;
+                    print(param);
+                  }
+
+                  final header = param['header'];
+                  final desc = param['desc'];
+                  return DialogPage(
+                    barrierDismissible: true,
+                    builder: (context) {
+                      return Dialog(
+                        elevation: 0,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: CustomAlertDialog(
+                          header: header,
+                          desc: desc,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              GoRoute(
+                path: RoutePath.settings,
+                name: RouteNames.settings,
+                pageBuilder: (context, state) {
+                  return buildMyTransition(
+                      child: const SettingsPage(),
+                      color: context.watch<Palette>().btnColor);
+                },
+              ),
+              GoRoute(
+                path: RoutePath.play,
+                name: RouteNames.play,
+                pageBuilder: (context, state) {
+                  return buildMyTransition(
+                      child: const LevelSelection(),
+                      color: context.watch<Palette>().btnColor);
+                },
+              ),
+            ],
+          ),
         ],
       ),
     ],

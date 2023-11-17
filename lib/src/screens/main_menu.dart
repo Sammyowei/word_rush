@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../src.dart';
@@ -54,10 +55,10 @@ class _MainMenuState extends State<MainMenu> {
 
                 // TODO: Game Body
                 Container(
-                  height: 550,
+                  height: 400,
                   padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
+                    left: 30,
+                    right: 30,
                     top: 30,
                     bottom: 60,
                   ),
@@ -73,40 +74,149 @@ class _MainMenuState extends State<MainMenu> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(),
-                      Container(
-                        height: 60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                audioController.playSfx(SfxType.btnClicked);
-                                context
-                                    .pushNamed(RouteNames.achievements, extra: {
-                                  'header': 'Achievements',
-                                  'desc':
-                                      'There is no current achievement at the moment, please check back later.'
-                                });
-                                print('cliicked');
-                              },
-                              child: Image.asset(
-                                image.prizeBtn,
-                              ),
-                            ),
-                            InkWell(
-                              child: Image.asset(
-                                image.leaderBtn,
-                              ),
+                      Text(
+                        'Main Menu',
+                        style: TextStyle(
+                          fontFamily: 'Guava Candy',
+                          fontSize: 50,
+                          color: palette.trueWhite,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              color: palette.btnColor,
+                              offset: const Offset(0, 3),
+                              blurRadius: 10,
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 50,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Play',
+                                    style: TextStyle(
+                                      fontFamily: 'Guava Candy',
+                                      fontSize: 40,
+                                      color: palette.trueWhite,
+                                      shadows: [
+                                        Shadow(
+                                          color: palette.btnColor,
+                                          offset: const Offset(0, 3),
+                                          blurRadius: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      audioController
+                                          .playSfx(SfxType.btnClicked);
+                                      context.goNamed(RouteNames.play);
+                                    },
+                                    child: Image.asset(
+                                      image.playBtn,
+                                      height: 50,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const Gap(20),
+                            Container(
+                              height: 50,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Achievements',
+                                    style: TextStyle(
+                                      fontFamily: 'Guava Candy',
+                                      fontSize: 40,
+                                      color: palette.trueWhite,
+                                      // fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(
+                                          color: palette.btnColor,
+                                          offset: const Offset(0, 3),
+                                          blurRadius: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      audioController
+                                          .playSfx(SfxType.btnClicked);
+                                      context.pushNamed(RouteNames.achievements,
+                                          extra: {
+                                            'header': 'Achievements',
+                                            'desc':
+                                                'There is no current achievement at the moment, please check back later.'
+                                          });
+                                    },
+                                    child: Image.asset(
+                                      image.prizeBtn,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Gap(20),
+                            Container(
+                              height: 50,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Leaderboard',
+                                    style: TextStyle(
+                                      fontFamily: 'Guava Candy',
+                                      fontSize: 40,
+                                      color: palette.trueWhite,
+                                      shadows: [
+                                        Shadow(
+                                          color: palette.btnColor,
+                                          offset: const Offset(0, 3),
+                                          blurRadius: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      audioController
+                                          .playSfx(SfxType.btnClicked);
+                                      context.pushNamed(RouteNames.leaderBoard,
+                                          extra: {
+                                            'header': 'Leaderboard',
+                                            'desc':
+                                                'There is no current leaderboard at the moment, please check back later.'
+                                          });
+                                    },
+                                    child: Image.asset(
+                                      image.leaderBtn,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
 
-                // CustomAlertDialog(),
                 Container(),
                 Container(),
                 // TODO: Build Footer
@@ -117,21 +227,4 @@ class _MainMenuState extends State<MainMenu> {
       ),
     );
   }
-}
-
-Widget _hideUntilReady({required Widget child, required Future<bool> ready}) {
-  return FutureBuilder<bool>(
-    future: ready,
-    builder: (context, snapshot) {
-      // Use Visibility here so that we have the space for the buttons
-      // ready.
-      return Visibility(
-        visible: snapshot.data ?? false,
-        maintainState: true,
-        maintainSize: true,
-        maintainAnimation: true,
-        child: child,
-      );
-    },
-  );
 }

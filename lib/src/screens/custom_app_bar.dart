@@ -34,6 +34,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = context.watch<PlayerProgress>();
+
     final _image = GameConstant.images;
     return Container(
       height: 60,
