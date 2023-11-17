@@ -64,13 +64,6 @@ final gameLevels = <GameLevel>[
     achievementIdIOS: 'first_win',
     achievementIdAndroid: 'NhkIwB69ejkMAOOLDb',
   ),
-  const GameLevel(
-    level: 10,
-    coinValue: 25000,
-    difficulty: 365,
-    achievementIdIOS: 'first_win',
-    achievementIdAndroid: 'NhkIwB69ejkMAOOLDb',
-  ),
 ];
 
 class GameLevel {

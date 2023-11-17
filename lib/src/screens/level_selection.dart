@@ -11,6 +11,7 @@ class LevelSelection extends StatelessWidget {
     final palette = context.watch<Palette>();
     final playerProgress = context.watch<PlayerProgress>();
     final audioController = context.watch<AudioController>();
+
     final image = GameConstant.images;
     return Scaffold(
       body: SafeArea(
@@ -55,50 +56,70 @@ class LevelSelection extends StatelessWidget {
                       width: MediaQuery.sizeOf(context).width,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage(
-                            image.settingBoard,
-                          ),
-                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white.withOpacity(0.4),
+                        // image: DecorationImage(
+                        //   fit: BoxFit.fill,
+                        //   image: AssetImage(
+                        //     image.settingBoard,
+                        //   ),
+                        // ),
                       ),
                       child: GridView.builder(
                         itemCount: gameLevels.length,
+                        addSemanticIndexes: true,
+                        // scrollDirection: Axis.horizontal,
                         clipBehavior: Clip.antiAlias,
-                        padding: const EdgeInsets.all(20),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          crossAxisSpacing: 30,
-                          mainAxisSpacing: 30,
+                          crossAxisSpacing: 50,
+                          mainAxisSpacing: 40,
                         ),
                         itemBuilder: (context, index) {
+                          // int newIndex = ( % 3) * 3 + (index ~/ 3);
                           final level = gameLevels[index];
                           final levelEnabled = (playerProgress
                                       .highestLevelReached >=
                                   level.level - 1 &&
                               playerProgress.coinsAmount >= level.coinValue);
-                          return Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+
+                          return InkWell(
+                            onTap: () {
+                              if (levelEnabled) {
+                                audioController.playSfx(SfxType.btnClicked);
+                                print(
+                                    'Game Level ${level.level} at index $index');
+
+                                return;
+                              }
+                              audioController.playSfx(SfxType.btnClicked);
+                              context.pushNamed(RouteNames.levelLocked, extra: {
+                                'header': 'Locked',
+                                'desc':
+                                    'Level locked you need to have a minimum of ${level.coinValue} points to unlock this level'
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(
+                                    image.table,
+                                  ),
+                                ),
                               ),
-                              shadows: [
-                                BoxShadow(
-                                  color: palette.backgroundSettings,
-                                  blurRadius: 7,
-                                  spreadRadius: 1,
-                                  offset: const Offset(1, 1),
-                                )
-                              ],
-                              color: palette.btnColor,
-                              image: DecorationImage(
-                                scale: 1,
-                                matchTextDirection: true,
-                                alignment: Alignment.center,
-                                image: AssetImage(
-                                  image.levelTable1,
+                              child: Center(
+                                child: Image.asset(
+                                  levelEnabled
+                                      ? levelNumber(index)
+                                      : image.levelLock,
+                                  color: levelEnabled ? null : palette.btnColor,
+                                  height: levelEnabled ? null : 40,
                                 ),
                               ),
                             ),
@@ -119,5 +140,33 @@ class LevelSelection extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String levelNumber(int index) {
+  final image = GameConstant.images;
+  switch (index) {
+    case 0:
+      return image.one;
+    case 1:
+      return image.two;
+    case 2:
+      return image.three;
+
+    case 3:
+      return image.four;
+
+    case 4:
+      return image.five;
+    case 5:
+      return image.six;
+    case 6:
+      return image.seven;
+    case 7:
+      return image.eight;
+    case 8:
+      return image.nine;
+    default:
+      return image.one;
   }
 }

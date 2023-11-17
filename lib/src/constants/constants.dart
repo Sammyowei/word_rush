@@ -68,4 +68,22 @@ class ImageConstants {
 
   //  TODO: bubbla assets
   String get btn => 'bubble/load'.png;
+  String get zero => 'bubble/0'.png;
+  String get one => 'bubble/1'.png;
+  String get two => 'bubble/2'.png;
+  String get three => 'bubble/3'.png;
+  String get four => 'bubble/4'.png;
+  String get five => 'bubble/5'.png;
+  String get six => 'bubble/6'.png;
+  String get seven => 'bubble/7'.png;
+  String get eight => 'bubble/8'.png;
+  String get nine => 'bubble/9'.png;
+  String get star => 'bubble/star_1'.png;
+  String get table => 'bubble/table'.png;
+
+  // TODO: level selectassets
+
+  String get levelHeader => 'level_select/header'.png;
+  String get levelTable1 => 'level_select/table'.png;
+  String get levelLock => 'level_select/lock'.png;
 }

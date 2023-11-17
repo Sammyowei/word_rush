@@ -11,4 +11,5 @@ class RoutePath {
   static String settings = 'settings';
   static String leaderBoard = 'leader-board';
   static String achievements = 'achievements';
+  static String levelLocked = 'level-locked';
 }

@@ -95,14 +95,47 @@ class GameRoutes {
                 },
               ),
               GoRoute(
-                path: RoutePath.play,
-                name: RouteNames.play,
-                pageBuilder: (context, state) {
-                  return buildMyTransition(
-                      child: const LevelSelection(),
-                      color: context.watch<Palette>().btnColor);
-                },
-              ),
+                  path: RoutePath.play,
+                  name: RouteNames.play,
+                  pageBuilder: (context, state) {
+                    return buildMyTransition(
+                        child: const LevelSelection(),
+                        color: context.watch<Palette>().btnColor);
+                  },
+                  routes: [
+                    GoRoute(
+                      path: RoutePath.levelLocked,
+                      name: RouteNames.levelLocked,
+                      pageBuilder: (context, state) {
+                        var param;
+                        final extra = state.extra;
+
+                        if (extra is Map<String, String>) {
+                          param = extra;
+                          print('extra');
+                        } else {
+                          param = state.uri.queryParameters;
+                          print(param);
+                        }
+
+                        final header = param['header'];
+                        final desc = param['desc'];
+                        return DialogPage(
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return Dialog(
+                              elevation: 0,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              child: CustomAlertDialog(
+                                header: header,
+                                desc: desc,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ]),
             ],
           ),
         ],
