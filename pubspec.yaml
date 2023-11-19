@@ -47,6 +47,7 @@ dependencies:
   unity_ads_plugin: ^0.3.10
   gap: ^3.0.1
   intl: ^0.18.1
+  timer_count_down: ^2.2.2
 
 dev_dependencies:
   flutter_test:

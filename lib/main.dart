@@ -105,6 +105,9 @@ class MyApp extends StatelessWidget {
         child: MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => CountdownModel(),
+        ),
+        ChangeNotifierProvider(
           create: (context) {
             var progress = PlayerProgress(playerProgressPersistence);
             progress.getLatestFromStore();
