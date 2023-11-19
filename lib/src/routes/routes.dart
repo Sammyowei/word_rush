@@ -103,6 +103,7 @@ class GameRoutes {
                         color: context.watch<Palette>().btnColor);
                   },
                   routes: [
+                    // Game Play Session
                     GoRoute(
                       path: RoutePath.levelLocked,
                       name: RouteNames.levelLocked,
