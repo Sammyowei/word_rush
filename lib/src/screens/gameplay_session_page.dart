@@ -38,17 +38,19 @@ class _PlaaySessionScreenState extends State<PlaaySessionScreen> {
       ],
       child: Scaffold(
         body: SafeArea(
-            child: Container(
-          height: size.height,
-          width: size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                _image.backgroundImage,
+          child: Container(
+            height: size.height,
+            width: size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(
+                  _image.backgroundImage,
+                ),
               ),
             ),
           ),
-        )),
+        ),
       ),
     );
   }

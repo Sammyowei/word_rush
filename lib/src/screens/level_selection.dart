@@ -90,6 +90,10 @@ class LevelSelection extends StatelessWidget {
                                 audioController.playSfx(SfxType.btnClicked);
                                 print(
                                     'Game Level ${level.level} at index $index');
+                                context.pushNamed(RouteNames.gameSession,
+                                    pathParameters: {
+                                      'level': "${level.level}"
+                                    });
 
                                 return;
                               }

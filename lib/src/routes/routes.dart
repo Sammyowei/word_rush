@@ -105,6 +105,25 @@ class GameRoutes {
                   routes: [
                     // Game Play Session
                     GoRoute(
+                      path: RoutePath.gameSession,
+                      name: RouteNames.gameSession,
+                      pageBuilder: (context, state) {
+                        final levelNumber =
+                            int.parse(state.pathParameters['level']!);
+                        final level = gameLevels
+                            .singleWhere((e) => e.level == levelNumber);
+                        return buildMyTransition<void>(
+                          key: ValueKey('level'),
+                          child: PlaaySessionScreen(
+                            key: const Key('play session'),
+                            level: level,
+                          ),
+                          color: context.watch<Palette>().btnColor,
+                        );
+                      },
+                    ),
+// Game kLevel LockedDialog
+                    GoRoute(
                       path: RoutePath.levelLocked,
                       name: RouteNames.levelLocked,
                       pageBuilder: (context, state) {

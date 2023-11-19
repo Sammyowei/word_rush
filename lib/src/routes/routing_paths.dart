@@ -12,4 +12,5 @@ class RoutePath {
   static String leaderBoard = 'leader-board';
   static String achievements = 'achievements';
   static String levelLocked = 'level-locked';
+  static String gameSession = 'session/:level';
 }
