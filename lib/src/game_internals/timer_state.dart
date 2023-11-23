@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CountdownModel extends ChangeNotifier {
   late Timer _timer;
@@ -42,6 +41,7 @@ class CountdownModel extends ChangeNotifier {
 
   void restartTimer(int minutes) {
     _isPaused = false;
+    stopTimer();
     _secondsRemaining = minutes * 60;
     notifyListeners();
   }

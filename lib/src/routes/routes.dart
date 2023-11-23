@@ -5,7 +5,7 @@ import 'package:word_rush/src/src.dart';
 
 class GameRoutes {
   static final routes = GoRouter(
-    initialLocation: RoutePath.home,
+    initialLocation: '/main-menu/play/session/1',
     routes: [
       GoRoute(
         path: RoutePath.home,
@@ -107,18 +107,28 @@ class GameRoutes {
                     GoRoute(
                       path: RoutePath.gameSession,
                       name: RouteNames.gameSession,
-                      pageBuilder: (context, state) {
+                      // pageBuilder: (context, state) {
+                      //   final levelNumber =
+                      //       int.parse(state.pathParameters['level']!);
+                      //   final level = gameLevels
+                      //       .singleWhere((e) => e.level == levelNumber);
+                      //   return buildMyTransition<void>(
+                      //     key: ValueKey('level'),
+                      //     child: PlaaySessionScreen(
+                      //       key: const Key('play session'),
+                      //       level: level,
+                      //     ),
+                      //     color: context.watch<Palette>().btnColor,
+                      //   );
+                      // },
+                      builder: (context, state) {
                         final levelNumber =
                             int.parse(state.pathParameters['level']!);
                         final level = gameLevels
                             .singleWhere((e) => e.level == levelNumber);
-                        return buildMyTransition<void>(
-                          key: ValueKey('level'),
-                          child: PlaaySessionScreen(
-                            key: const Key('play session'),
-                            level: level,
-                          ),
-                          color: context.watch<Palette>().btnColor,
+                        return PlaaySessionScreen(
+                          key: const Key('play session'),
+                          level: level,
                         );
                       },
                     ),

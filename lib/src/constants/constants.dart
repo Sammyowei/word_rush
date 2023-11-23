@@ -80,10 +80,13 @@ class ImageConstants {
   String get nine => 'bubble/9'.png;
   String get star => 'bubble/star_1'.png;
   String get table => 'bubble/table'.png;
+  String get clock => 'bubble/clock'.png;
 
   // TODO: level selectassets
 
   String get levelHeader => 'level_select/header'.png;
   String get levelTable1 => 'level_select/table'.png;
   String get levelLock => 'level_select/lock'.png;
+
+  // TODO: clock
 }

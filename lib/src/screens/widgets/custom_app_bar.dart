@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../src.dart';
+import '../../src.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({

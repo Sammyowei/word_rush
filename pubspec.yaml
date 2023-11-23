@@ -48,6 +48,8 @@ dependencies:
   gap: ^3.0.1
   intl: ^0.18.1
   timer_count_down: ^2.2.2
+  english_words: ^4.0.0
+  all_english_words: ^1.0.3
 
 dev_dependencies:
   flutter_test:

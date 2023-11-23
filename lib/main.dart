@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:word_rush/firebase_options.dart';
+import 'package:word_rush/src/logic/logic.dart';
 
 import 'src/src.dart';
 
@@ -68,6 +69,12 @@ Future<void> main() async {
     await _admanager.initialize();
   }
 
+  GameLogic? _logic;
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    _logic = GameLogic()
+      // Attempt to log the player in.
+      ..initialize();
+  }
   GamesServicesController? gamesServicesController;
   if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
     gamesServicesController = GamesServicesController()
@@ -81,6 +88,7 @@ Future<void> main() async {
       playerProgressPersistence: LocalStoragePlayerProgressPersistence(),
       admanager: _admanager,
       gamesServicesController: gamesServicesController,
+      logic: _logic,
     ),
   );
 }
@@ -92,11 +100,13 @@ class MyApp extends StatelessWidget {
 
   final GamesServicesController? gamesServicesController;
   final AdManager? admanager;
+  final GameLogic? logic;
   const MyApp(
       {super.key,
       required this.playerProgressPersistence,
       required this.settingsPersistence,
       this.gamesServicesController,
+      this.logic,
       this.admanager});
 
   @override
@@ -104,6 +114,9 @@ class MyApp extends StatelessWidget {
     return AppLifecycleObserver(
         child: MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => GameLogic()..initialize(),
+        ),
         ChangeNotifierProvider(
           create: (context) => CountdownModel(),
         ),
@@ -134,9 +147,7 @@ class MyApp extends StatelessWidget {
             if (audio == null) throw ArgumentError.notNull();
             audio.attachSettings(settings);
             audio.attachLifecycleNotifier(lifecycleNotifier);
-            // Future.delayed(
-            //   const Duration(seconds: 20),
-            // );
+
             return audio;
           },
           dispose: (context, audio) => audio.dispose(),
