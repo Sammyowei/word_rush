@@ -50,6 +50,7 @@ dependencies:
   timer_count_down: ^2.2.2
   english_words: ^4.0.0
   all_english_words: ^1.0.3
+  flame: ^1.10.1
 
 dev_dependencies:
   flutter_test:

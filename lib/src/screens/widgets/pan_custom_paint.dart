@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_rush/src/src.dart';
 
 class WordCookiePainter extends CustomPainter {
   WordCookiePainter({required this.letters});
@@ -38,12 +39,12 @@ class WordCookiePainter extends CustomPainter {
     ];
 
     // Paint each word tile
-    Paint tilePaint = Paint()..color = Colors.blue;
+    Paint tilePaint = Paint()..color = Palette().btnColor;
     for (int i = 0; i < tilePositions.length; i++) {
       canvas.drawRect(
         Rect.fromCircle(
           center: tilePositions[i],
-          radius: 20,
+          radius: 25,
         ),
         tilePaint,
       );
@@ -52,7 +53,8 @@ class WordCookiePainter extends CustomPainter {
       TextPainter(
         text: TextSpan(
           text: letters[i],
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+              color: Colors.white, fontFamily: 'Guava Candy', fontSize: 25),
         ),
         textDirection: TextDirection.ltr,
       )

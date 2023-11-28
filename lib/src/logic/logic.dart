@@ -22,6 +22,34 @@ class GameLogic extends ChangeNotifier {
     return words[index];
   }
 
+  List<String> gamePlayWords(List<String> letters, [int wordLength = 0]) {
+    List<String> filteredWords = filteredWordCollectionFromGameWord(letters);
+    List<String> choosenWords = [];
+    final pickedWord = _pickWordsRandomly(filteredWords);
+
+    for (var word in pickedWord) {
+      if (!(word.length >= 3)) {
+        continue;
+      } else {
+        choosenWords.add(word);
+      }
+    }
+
+    return choosenWords;
+  }
+
+  Set<String> _pickWordsRandomly(List<String> wordList) {
+    List<String> shuffledList = List.from(wordList)..shuffle();
+    Set<String> pickedWords = {};
+
+    for (var word in shuffledList) {
+      if (!pickedWords.contains(word)) {
+        pickedWords.add(word);
+      }
+    }
+    return pickedWords;
+  }
+
   List<String> _generatedWords() {
     List<String> generatedWords = [];
     final allWords = _wordsCollection;
