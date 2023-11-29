@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:all_english_words/all_english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:word_rush/src/src.dart';
 
 class GameLogic extends ChangeNotifier {
   late List<String> _wordsCollection;

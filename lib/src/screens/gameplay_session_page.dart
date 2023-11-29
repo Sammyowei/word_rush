@@ -26,8 +26,6 @@ class _PlaaySessionScreenState extends State<PlaaySessionScreen> {
   String gameWord = '';
   List<String> playWords = [];
 
-  final Size containerSize = Size(250, 250);
-
   @override
   void initState() {
     super.initState();
@@ -147,23 +145,6 @@ class _PlaaySessionScreenState extends State<PlaaySessionScreen> {
                   ),
                 ),
                 Gap(30),
-                GestureDetector(
-                  onLongPressMoveUpdate: (movePudate) {
-                    print(movePudate.localOffsetFromOrigin);
-                    print(movePudate.offsetFromOrigin);
-                  },
-                  child: Container(
-                    height: containerSize.height,
-                    width: containerSize.width,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: palette.btnColor,
-                    ),
-                    child: Stack(
-                      children: [],
-                    ),
-                  ),
-                )
               ],
             ),
           ),
