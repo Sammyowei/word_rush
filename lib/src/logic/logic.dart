@@ -6,6 +6,20 @@ import 'package:flutter/material.dart';
 class GameLogic extends ChangeNotifier {
   late List<String> _wordsCollection;
   List<String> get wordCollection => _wordsCollection;
+  List<String> _foundWords = [];
+  List<String> get foundWords => _foundWords;
+
+  void addToFoundWord(String word) {
+    _foundWords.add(word);
+  }
+
+  void restartFoundWords() {
+    _foundWords = [];
+  }
+
+  void resetFoundWords() {
+    _foundWords = [];
+  }
 
   void initialize() {
     final englishWords = AllEnglishWords();

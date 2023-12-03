@@ -20,6 +20,18 @@ List<String> soundTypeToFilename(SfxType type) {
       return [
         'button-clicked.mp3',
       ];
+    case SfxType.error:
+      return [
+        'error-1.mp3',
+      ];
+    case SfxType.tileClick:
+      return [
+        'click.mp3',
+      ];
+    case SfxType.summit:
+      return [
+        'correct.mp3',
+      ];
   }
 }
 
@@ -35,6 +47,12 @@ double soundTypeToVolume(SfxType type) {
       return 1.0;
     case SfxType.btnClicked:
       return 1.0;
+    case SfxType.error:
+      return 1.0;
+    case SfxType.tileClick:
+      return 1.0;
+    case SfxType.summit:
+      return 1.0;
   }
 }
 
@@ -44,4 +62,7 @@ enum SfxType {
   select,
   success,
   btnClicked,
+  error,
+  tileClick,
+  summit,
 }

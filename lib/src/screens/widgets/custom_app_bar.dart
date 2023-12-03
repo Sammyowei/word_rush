@@ -31,9 +31,17 @@ class CustomAppBar extends StatelessWidget {
   final VoidCallback? rightBtnOnTap;
   final bool forCoin;
 
+  static late int _coins;
+  void coin(BuildContext context) async {
+    final progress = Provider.of<PlayerProgress>(context);
+
+    _coins = await progress.coinsAmount;
+  }
+
   @override
   Widget build(BuildContext context) {
     final progress = context.watch<PlayerProgress>();
+    coin(context);
 
     final _image = GameConstant.images;
     return Container(
@@ -92,7 +100,7 @@ class CustomAppBar extends StatelessWidget {
                     ),
                     Gap(5),
                     Text(
-                      '${progress.coinsAmount}',
+                      '$_coins',
                       style: TextStyle(
                         fontFamily: 'Guava Candy',
                         fontSize: 18,

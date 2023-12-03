@@ -2,6 +2,7 @@ const String imagePath = 'assets/images/';
 
 extension ImageExtension on String {
   String get png => '$imagePath$this.png';
+  String get jpg => '$imagePath$this.jpg';
 }
 
 class GameConstant {
@@ -88,5 +89,7 @@ class ImageConstants {
   String get levelTable1 => 'level_select/table'.png;
   String get levelLock => 'level_select/lock'.png;
 
-  // TODO: clock
+  // TODO: Game Play Session Background
+
+  String get gamePlayBackground => 'word-rush-bg'.jpg;
 }

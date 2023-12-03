@@ -90,6 +90,7 @@ flutter:
     - assets/images/upgrade/
     - assets/images/you_lose/
     - assets/images/you_win/
+    - assets/images/
     - assets/music/
     - assets/sfx/
   #   - images/a_dot_ham.jpeg
